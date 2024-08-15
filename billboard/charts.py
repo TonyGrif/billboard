@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 
 class BillboardChart:
@@ -24,6 +24,7 @@ class BillboardChart:
             An optional date (YYYY-MM-DD) for this chart; if none is provided,
             the current date is used.
         """
+        self.chart: List = []
         if date is not None:
             self.date = date
         else:
@@ -70,18 +71,7 @@ class BillboardChart:
             )
 
         self._date = date.strftime("%Y-%m-%d")
-
-    @property
-    def charts(self):
-        """
-        Get the full chart from the given week.
-
-        Returns
-        ---------
-        List
-            A collection of chart data from the given week.
-        """
-        raise NotImplementedError
+        self._generate_chart()
 
     @property
     def top_spot(self):
@@ -94,3 +84,9 @@ class BillboardChart:
             A data structure containing the top spot information.
         """
         raise NotImplementedError
+
+    def _generate_chart(self):
+        """
+        Generate the chart for the given week.
+        """
+        self.chart = []

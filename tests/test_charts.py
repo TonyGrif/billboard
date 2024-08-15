@@ -14,9 +14,11 @@ def chart():
 class TestBillboardChart:
     def test_init(self, chart):
         assert_that(chart.date, equal_to("2024-01-01"))
+        # assert_that(chart.chart, has_length(100))
 
         cur = BillboardChart()
         assert_that(cur.date, equal_to(datetime.today().strftime("%Y-%m-%d")))
+        # assert_that(cur.chart, has_length(100))
 
     def test_date_exception(self):
         with pytest.raises(ValueError) as _:
