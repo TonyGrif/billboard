@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytest
 from hamcrest import assert_that, equal_to
@@ -21,3 +21,10 @@ class TestBillboardChart:
     def test_date_exception(self):
         with pytest.raises(ValueError) as _:
             _ = BillboardChart("01/01/24")
+
+        with pytest.raises(ValueError) as _:
+            _ = BillboardChart("1958-07-04")
+
+        with pytest.raises(ValueError) as _:
+            not_yet = datetime.today() + timedelta(weeks=1)
+            _ = BillboardChart(not_yet.strftime("%Y-%m-%d"))

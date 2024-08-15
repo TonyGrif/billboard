@@ -56,12 +56,20 @@ class BillboardChart:
         ValueError
             If the date is before 1958-08-04 or after the current date.
         """
+        date: datetime
         try:
-            self._date = datetime.fromisoformat(iso_date).strftime("%Y-%m-%d")
+            date = datetime.fromisoformat(iso_date)
         except Exception as exc:
             raise ValueError(
-                "Improperly formatted ISO string, expect YYYY-MM-DD"
+                "Improperly formatted ISO string, expected YYYY-MM-DD"
             ) from exc
+
+        if date < datetime.fromisoformat("1958-08-04") or date > datetime.today():
+            raise ValueError(
+                "Invalid date provided, expected 1958-08-04 - Current Date"
+            )
+
+        self._date = date.strftime("%Y-%m-%d")
 
     @property
     def charts(self):
