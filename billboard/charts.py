@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime
 
 
 class BillboardChart:
@@ -23,7 +24,10 @@ class BillboardChart:
             An optional date (YYYY-MM-DD) for this chart; if none is provided,
             the current date is used.
         """
-        raise NotImplementedError
+        if date is not None:
+            self.date = date
+        else:
+            self.date = datetime.today().strftime("%Y-%m-%d")
 
     @property
     def date(self) -> str:
@@ -35,7 +39,7 @@ class BillboardChart:
         str
             The ISO 8601 formatted date.
         """
-        raise NotImplementedError
+        return self._date
 
     @date.setter
     def date(self, iso_date: str) -> None:
@@ -52,7 +56,7 @@ class BillboardChart:
         ValueError
             If the date is before 1958-08-04 or after the current date.
         """
-        raise NotImplementedError
+        self._date = iso_date
 
     @property
     def charts(self):
