@@ -1,5 +1,5 @@
-from typing import Optional
 from datetime import datetime
+from typing import Optional
 
 
 class BillboardChart:
@@ -56,7 +56,12 @@ class BillboardChart:
         ValueError
             If the date is before 1958-08-04 or after the current date.
         """
-        self._date = iso_date
+        try:
+            self._date = datetime.fromisoformat(iso_date).strftime("%Y-%m-%d")
+        except Exception as exc:
+            raise ValueError(
+                "Improperly formatted ISO string, expect YYYY-MM-DD"
+            ) from exc
 
     @property
     def charts(self):
