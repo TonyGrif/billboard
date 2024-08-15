@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import List, Optional
 
+from .utils import make_request, parse_request
+
 
 class BillboardChart:
     """
@@ -89,4 +91,5 @@ class BillboardChart:
         """
         Generate the chart for the given week.
         """
-        self.chart = []
+        response = make_request(self.date)
+        self.chart = parse_request(response)
