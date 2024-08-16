@@ -8,6 +8,10 @@ CHART_RESULT_SELECTOR = (
     "chart-results-list // lrv-u-padding-t-150 lrv-u-padding-t-050@mobile-max"
 )
 RESULT_CONTAINER = "o-chart-results-list-row-container"
+RANKING = (
+    "c-label a-font-primary-bold-l u-font-size-32@tablet u-letter-spacing-0080@tablet"
+)
+DETAILS_CLASS = "lrv-u-width-100p"
 
 
 def make_request(date: str, timeout: Optional[int] = 5) -> requests.Response:
@@ -52,7 +56,7 @@ def parse_request(response: requests.Response) -> List:
         Collection containing each chart entry.
     """
     container = _get_container(response.text)
-    return _get_results(str(container))
+    return _get_blocks(str(container))
 
 
 def _get_container(text: str):
@@ -60,6 +64,28 @@ def _get_container(text: str):
     return soup.find("div", {"class": CHART_RESULT_SELECTOR})
 
 
-def _get_results(text: str) -> List:
+def _get_blocks(text: str) -> List:
+    data: List = []
+
     soup = BeautifulSoup(text, "html.parser")
-    return soup.find_all("div", {"class": RESULT_CONTAINER})
+    for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
+        data.append(_parse_block(str(block)))
+    return data
+
+
+def _parse_block(text: str) -> str:
+    soup = BeautifulSoup(text, "html.parser")
+
+    rank_html = soup.find("span", {"class": RANKING})
+    if rank_html is not None:
+        rank = rank_html.get_text(strip=True)
+    else:
+        raise ValueError("Unable to find rank")
+
+    details = soup.find("li", {"class": DETAILS_CLASS})
+    if details is not None:
+        det_list = details.get_text(separator="\\", strip=True).split("\\")
+    else:
+        raise ValueError("Unable to find title and artist(s) details")
+
+    return f"{rank}\\{det_list[0]}\\{det_list[1]}"

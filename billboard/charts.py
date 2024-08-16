@@ -85,7 +85,7 @@ class BillboardChart:
         TBD
             A data structure containing the top spot information.
         """
-        raise NotImplementedError
+        return self.chart[0]
 
     def _generate_chart(self):
         """

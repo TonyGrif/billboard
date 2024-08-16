@@ -17,3 +17,13 @@ def test_make_request(response):
 def test_parse_request(response):
     chart = parse_request(response)
     assert_that(chart, has_length(100))
+
+    top = chart[0]
+    assert_that(top, contains_string("1"))
+    assert_that(top, contains_string("A Bar Song (Tipsy)"))
+    assert_that(top, contains_string("Shaboozey"))
+
+    second = chart[1]
+    assert_that(second, contains_string("2"))
+    assert_that(second, contains_string("I Had Some Help"))
+    assert_that(second, contains_string("Post Malone Featuring Morgan Wallen"))
