@@ -1,5 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
+
+from billboard.chart_entry import ChartEntry
 
 from .utils import make_request, parse_request
 
@@ -12,8 +14,8 @@ class BillboardChart:
     -----------
     date: str
         The date for this chart in ISO 8601 format (YYYY-MM-DD).
-    chart: List[]
-        The chart for the given date.
+    chart: List[ChartEntry]
+        The chart for the given date containing all chart data.
     """
 
     def __init__(self, date: Optional[str] = None) -> None:
@@ -24,13 +26,13 @@ class BillboardChart:
         -----------
         date: str
             An optional date (YYYY-MM-DD) for this chart; if none is provided,
-            the current date is used.
+            the chart from one day ago is used
         """
         self.chart: List = []
         if date is not None:
             self.date = date
         else:
-            self.date = datetime.today().strftime("%Y-%m-%d")
+            self.date = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
 
     @property
     def date(self) -> str:
@@ -59,7 +61,6 @@ class BillboardChart:
         ValueError
             If the date is before 1958-08-04 or after the current date.
         """
-        date: datetime
         try:
             date = datetime.fromisoformat(iso_date)
         except Exception as exc:
@@ -76,13 +77,13 @@ class BillboardChart:
         self._generate_chart()
 
     @property
-    def top_spot(self):
+    def top_spot(self) -> ChartEntry:
         """
         Get the top spot from this week.
 
         Returns
         --------
-        TBD
+        ChartEntry
             A data structure containing the top spot information.
         """
         return self.chart[0]

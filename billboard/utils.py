@@ -3,6 +3,8 @@ from typing import List, Optional
 import requests
 from bs4 import BeautifulSoup
 
+from .chart_entry import ChartEntry
+
 URL: str = "https://www.billboard.com/charts/hot-100/"
 CHART_RESULT_SELECTOR = (
     "chart-results-list // lrv-u-padding-t-150 lrv-u-padding-t-050@mobile-max"
@@ -41,7 +43,7 @@ def make_request(date: str, timeout: Optional[int] = 5) -> requests.Response:
     return response
 
 
-def parse_request(response: requests.Response) -> List:
+def parse_request(response: requests.Response) -> List[ChartEntry]:
     """
     Parse the HTTP response for chart data.
 
@@ -52,11 +54,11 @@ def parse_request(response: requests.Response) -> List:
 
     Returns
     ---------
-    List
+    List[ChartEntry]
         Collection containing each chart entry.
     """
     container = _get_container(response.text)
-    return _get_blocks(str(container))
+    return _get_data(str(container))
 
 
 def _get_container(text: str):
@@ -64,7 +66,7 @@ def _get_container(text: str):
     return soup.find("div", {"class": CHART_RESULT_SELECTOR})
 
 
-def _get_blocks(text: str) -> List:
+def _get_data(text: str) -> List[ChartEntry]:
     data: List = []
 
     soup = BeautifulSoup(text, "html.parser")
@@ -73,19 +75,19 @@ def _get_blocks(text: str) -> List:
     return data
 
 
-def _parse_block(text: str) -> str:
+def _parse_block(text: str) -> ChartEntry:
     soup = BeautifulSoup(text, "html.parser")
 
-    rank_html = soup.find("span", {"class": RANKING})
-    if rank_html is not None:
+    if (rank_html := soup.find("span", {"class": RANKING})) is not None:
         rank = rank_html.get_text(strip=True)
     else:
         raise ValueError("Unable to find rank")
 
-    details = soup.find("li", {"class": DETAILS_CLASS})
-    if details is not None:
-        det_list = details.get_text(separator="\\", strip=True).split("\\")
+    if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
+        details = details_str.get_text(separator="\\", strip=True).split("\\")
     else:
         raise ValueError("Unable to find title and artist(s) details")
 
-    return f"{rank}\\{det_list[0]}\\{det_list[1]}"
+    return ChartEntry(
+        rank, details[0], details[1], details[-3], details[-2], details[-1]
+    )
