@@ -57,8 +57,9 @@ def parse_request(response: requests.Response) -> List[ChartEntry]:
     List[ChartEntry]
         Collection containing each chart entry.
     """
-    container = _get_container(response.text)
-    return _get_data(str(container))
+    if(container := _get_container(response.text)) != []:
+        return _get_data(str(container))
+    return []
 
 
 def _get_container(text: str):
