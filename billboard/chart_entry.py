@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class ChartEntry:
-    rank: str
+    rank: int
     title: str
     artist: str
     last_week_rank: str

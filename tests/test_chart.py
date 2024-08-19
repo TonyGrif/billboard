@@ -32,10 +32,21 @@ class TestBillboardChart:
             not_yet = datetime.today() + timedelta(weeks=1)
             _ = BillboardChart(not_yet.strftime("%Y-%m-%d"))
 
-    def test_data(self, chart):
-        assert_that(chart.top_spot.rank, equal_to("1"))
-        assert_that(chart.top_spot.title, equal_to("A Bar Song (Tipsy)"))
-        assert_that(chart.top_spot.artist, equal_to("Shaboozey"))
-        assert_that(chart.top_spot.last_week_rank, equal_to("1"))
-        assert_that(chart.top_spot.peak_rank, equal_to("1"))
-        assert_that(chart.top_spot.weeks_on_chart, equal_to("16"))
+    def test_top_spot(self, chart):
+        top = chart.top_spot
+        assert_that(top.rank, equal_to(1))
+        assert_that(top.title, equal_to("A Bar Song (Tipsy)"))
+        assert_that(top.artist, equal_to("Shaboozey"))
+        assert_that(top.last_week_rank, equal_to("1"))
+        assert_that(top.peak_rank, equal_to("1"))
+        assert_that(top.weeks_on_chart, equal_to("16"))
+
+    def test_get_artist(self, chart):
+        artist = chart.artist_entries("Chappell Roan")
+        assert_that(artist, has_length(6))
+
+        artist = chart.artist_entries("chappell roan")
+        assert_that(artist, has_length(6))
+
+        artist = chart.artist_entries("Chappell Roan", rank=50)
+        assert_that(artist, has_length(3))

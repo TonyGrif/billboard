@@ -80,7 +80,7 @@ def _parse_block(text: str) -> ChartEntry:
     soup = BeautifulSoup(text, "html.parser")
 
     if (rank_html := soup.find("span", {"class": RANKING})) is not None:
-        rank = rank_html.get_text(strip=True)
+        rank = int(rank_html.get_text(strip=True))
     else:
         raise ValueError("Unable to find rank")
 
