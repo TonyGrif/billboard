@@ -1,4 +1,4 @@
-from .charts import BillboardChart
+from .chart import BillboardChart
 
 __all__ = [
     "BillboardChart",
