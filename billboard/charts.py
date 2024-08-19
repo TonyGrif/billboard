@@ -18,7 +18,7 @@ class BillboardChart:
         The chart for the given date containing all chart data.
     """
 
-    def __init__(self, date: Optional[str] = None) -> None:
+    def __init__(self, date: Optional[str] = None, auto_date: bool = True) -> None:
         """
         The constructor for a BillboardChart object.
 
@@ -26,9 +26,13 @@ class BillboardChart:
         -----------
         date: str
             An optional date (YYYY-MM-DD) for this chart; if none is provided,
-            the chart from one day ago is used
+            the chart from one day ago is used.
+        auto_date: int
+            Determines if the object will auto update the date to the previous
+            week if the choosen one does not exist.
         """
         self.chart: List = []
+        self.auto_date = auto_date
         if date is not None:
             self.date = date
         else:
@@ -93,4 +97,8 @@ class BillboardChart:
         Generate the chart for the given week.
         """
         response = make_request(self.date)
-        self.chart = parse_request(response)
+        if (data := parse_request(response)) == [] and self.auto_date is True:
+            week_ago = datetime.fromisoformat(self.date) - timedelta(weeks=1)
+            self.date = week_ago.strftime("%Y-%m-%d")
+        else:
+            self.chart = data

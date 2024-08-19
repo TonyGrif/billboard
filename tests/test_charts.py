@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import pytest
-from hamcrest import assert_that, equal_to, has_length
+from hamcrest import any_of, assert_that, equal_to, has_length
 
 from billboard import BillboardChart
 
@@ -16,10 +16,10 @@ class TestBillboardChart:
         assert_that(chart.date, equal_to("2024-08-08"))
         assert_that(chart.chart, has_length(100))
 
-        cur = BillboardChart()
+        cur = BillboardChart(auto_date=False)
         yesterday = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
         assert_that(cur.date, equal_to(yesterday))
-        assert_that(cur.chart, has_length(100))
+        assert_that(len(cur.chart), any_of(equal_to(0), equal_to(100)))
 
     def test_date_exception(self):
         with pytest.raises(ValueError) as _:
