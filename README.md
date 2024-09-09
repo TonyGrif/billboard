@@ -10,8 +10,11 @@ All dependencies can be resolved through [poetry](https://python-poetry.org/)
 (`poetry install`)
 
 ## Quickstart
-TBW
+```python
+from billboard import BillboardChart
+
+chart = BillboardChart("YYYY-MM-DD")
+```
 
 ## Docs
-TBW
-Link to site(?)
+Coming soon!
