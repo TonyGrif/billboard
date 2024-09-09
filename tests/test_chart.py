@@ -6,7 +6,7 @@ from hamcrest import any_of, assert_that, equal_to, has_length
 from billboard import BillboardChart
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def chart():
     return BillboardChart("2024-08-08")
 

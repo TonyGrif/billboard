@@ -4,7 +4,7 @@ from hamcrest import assert_that, contains_string, equal_to, has_length
 from billboard.utils import make_request, parse_request
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def response():
     return make_request("2024-08-15")
 
