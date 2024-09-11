@@ -1,6 +1,5 @@
-from .hot import BillboardChart
 from .glob import GlobalChart
-
+from .hot import BillboardChart
 
 __all__ = [
     "BillboardChart",
