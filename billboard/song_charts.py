@@ -8,25 +8,19 @@ class SongCharts:
     """
     Class to manage all song charts available.
 
-    Attributes
-    --------------
-    date: str
-        The date for the charts in ISO 8601 format (YYYY-MM-DD)
-    hot100: BillboardChart
-        The Hot 100 chart.
-    global200: GlobalChart
-        The Global 200 chart.
+    Attributes:
+        date (str): The date for the charts in ISO 8601 format (YYYY-MM-DD)
+        hot100 (BillboardChart): The Hot 100 chart.
+        global200 (GlobalChart): The Global 200 chart.
     """
 
     def __init__(self, date: Optional[str] = None) -> None:
         """
         The constructor for the SongCharts.
 
-        Parameters
-        -----------
-        date: str
-            An optional date (YYYY-MM-DD) for this chart; if none is provided,
-            the chart from one day ago is used.
+        Parameters:
+            date (str): An optional date (YYYY-MM-DD) for this chart; if none is 
+                provided, the chart from one day ago is used.
         """
         self.hot100 = BillboardChart(date)
         self.global200 = GlobalChart(date)
@@ -36,9 +30,8 @@ class SongCharts:
         """
         Return the Hot 100 chart.
 
-        Returns
-        ---------
-        A list containing ChartEntry elements.
+        Returns:
+            A list containing ChartEntry elements.
         """
         return self.hot100.chart
 
@@ -47,8 +40,7 @@ class SongCharts:
         """
         Return the Global 200 chart.
 
-        Returns
-        ----------
-        A list containing ChartEntry elements.
+        Returns:
+            A list containing ChartEntry elements.
         """
         return self.global200.chart
