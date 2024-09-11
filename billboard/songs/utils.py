@@ -68,17 +68,18 @@ def parse_request(response: requests.Response) -> List[ChartEntry]:
 
 def _parse_block(text: str) -> ChartEntry:
     soup = BeautifulSoup(text, "html.parser")
+    data: List = []
 
     if (rank_html := soup.find("span", {"class": RANKING})) is not None:
-        rank = int(rank_html.get_text(strip=True))
+        data.append(int(rank_html.get_text(strip=True)))
     else:
-        raise ValueError("Unable to find rank")
+        data.append(None)
 
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
+        data.extend(details[0:2])
+        data.extend(details[-3:])
     else:
-        raise ValueError("Unable to find title and artist(s) details")
+        data.extend([None for _ in range(5)])
 
-    return ChartEntry(
-        rank, details[0], details[1], details[-3], details[-2], details[-1]
-    )
+    return ChartEntry(*data)
