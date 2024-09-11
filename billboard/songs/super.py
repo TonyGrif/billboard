@@ -24,7 +24,7 @@ class SongChart(ABC):
         oldest_date: str = "1958-08-04",
     ) -> None:
         """
-        The constructor for a BillboardChart object.
+        The constructor for a Chart object.
 
         Parameters
         -----------
@@ -62,6 +62,11 @@ class SongChart(ABC):
     def date(self, iso_date: str) -> None:
         """
         Set a new date for the class and update the current chart.
+
+        Parameters
+        -----------
+        iso_date: str
+            The ISO 8601 string.
         """
         try:
             date = datetime.fromisoformat(iso_date)
