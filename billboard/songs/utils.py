@@ -13,14 +13,16 @@ RANKING = (
 DETAILS_CLASS = "lrv-u-width-100p"
 
 
-def make_request(chart: str, date: str, timeout: Optional[int] = 5) -> requests.Response:
+def make_request(
+    chart: str, date: str, timeout: Optional[int] = 5
+) -> requests.Response:
     """
     Make the HTTP request of the Billboard Hot 100 site.
 
     Parameters
     -----------
     chart: str
-        The chart to request (hot 100).
+        The chart to request (hot-100 or billboard-global-200).
     date: str
         The date of the chart to gather.
     timeout: int
