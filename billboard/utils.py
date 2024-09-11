@@ -3,7 +3,7 @@ from typing import List, Optional
 import requests
 from bs4 import BeautifulSoup
 
-from .chart_entry import ChartEntry
+from .songs.chart_entry import ChartEntry
 
 URL: str = "https://www.billboard.com/charts/hot-100/"
 CHART_RESULT_SELECTOR = (

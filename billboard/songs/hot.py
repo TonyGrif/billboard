@@ -1,9 +1,8 @@
 from datetime import datetime, timedelta
 from typing import List, Optional
 
-from billboard.chart_entry import ChartEntry
-
-from .utils import make_request, parse_request
+from ..utils import make_request, parse_request
+from .chart_entry import ChartEntry
 
 
 class BillboardChart:
