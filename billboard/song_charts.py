@@ -43,7 +43,7 @@ class SongCharts:
         return self.hot100.chart
 
     @property
-    def glob_chart(self) -> List[ChartEntry]:
+    def global_chart(self) -> List[ChartEntry]:
         """
         Return the Global 200 chart.
 
