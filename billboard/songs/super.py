@@ -70,10 +70,8 @@ class SongChart(ABC):
         """
         try:
             date = datetime.fromisoformat(iso_date)
-        except Exception as exc:
-            raise ValueError(
-                "Improperly formatted ISO string, expected YYYY-MM-DD"
-            ) from exc
+        except ValueError as exec:
+            raise exec
 
         if date < datetime.fromisoformat(self.oldest_date) or date > datetime.today():
             raise ValueError("Invalid date provided")

@@ -19,7 +19,7 @@ class SongCharts:
         The constructor for the SongCharts.
 
         Parameters:
-            date (str): An optional date (YYYY-MM-DD) for this chart; if none is 
+            date (str): An optional date (YYYY-MM-DD) for this chart; if none is
                 provided, the chart from one day ago is used.
         """
         self.hot100 = BillboardChart(date)

@@ -14,6 +14,7 @@ class ChartEntry:
         peak_rank (str): The highest rank this song has had.
         weeks_on_chart (str): The number of weeks this song has been on the chart.
     """
+
     rank: int
     title: str
     artist: str
