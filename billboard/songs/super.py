@@ -17,7 +17,12 @@ class SongChart(ABC):
         The chart for the given date containing all chart data.
     """
 
-    def __init__(self, date: Optional[str] = None, auto_date: bool = True) -> None:
+    def __init__(
+        self,
+        date: Optional[str] = None,
+        auto_date: bool = True,
+        oldest_date: str = "1958-08-04",
+    ) -> None:
         """
         The constructor for a BillboardChart object.
 
@@ -29,9 +34,13 @@ class SongChart(ABC):
         auto_date: bool
             Determines if the object will auto update the date to the previous
             week if the choosen one does not exist.
+        oldest_date: str
+            Set the oldest date allowed for a given chart, defaults to the oldest
+            available for the Hot 100 chart.
         """
         self.chart: List[ChartEntry] = []
         self.auto_date = auto_date
+        self.oldest_date = oldest_date
         if date is not None:
             self.date = date
         else:
@@ -61,10 +70,8 @@ class SongChart(ABC):
                 "Improperly formatted ISO string, expected YYYY-MM-DD"
             ) from exc
 
-        if date < datetime.fromisoformat("1958-08-04") or date > datetime.today():
-            raise ValueError(
-                "Invalid date provided, expected 1958-08-04 - Current Date"
-            )
+        if date < datetime.fromisoformat(self.oldest_date) or date > datetime.today():
+            raise ValueError("Invalid date provided")
 
         self._date = date.strftime("%Y-%m-%d")
         self._generate_chart()
