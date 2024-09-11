@@ -120,4 +120,4 @@ class SongChart(ABC):
         """
         Generate the chart for the given week.
         """
-        pass
+        raise NotImplementedError  # pragma: no cover
