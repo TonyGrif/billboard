@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
-from ..utils import make_request, parse_request
+from .utils import make_request, parse_request
 from .super import SongChart
 
 
@@ -36,7 +36,7 @@ class BillboardChart(SongChart):
         """
         Generate the chart for the given week.
         """
-        response = make_request(self.date)
+        response = make_request("hot-100", self.date)
         if (data := parse_request(response)) == [] and self.auto_date is True:
             week_ago = datetime.fromisoformat(self.date) - timedelta(weeks=1)
             self.date = week_ago.strftime("%Y-%m-%d")
