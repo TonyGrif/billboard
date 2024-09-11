@@ -6,9 +6,6 @@ from bs4 import BeautifulSoup
 from .songs.chart_entry import ChartEntry
 
 URL: str = "https://www.billboard.com/charts/hot-100/"
-CHART_RESULT_SELECTOR = (
-    "chart-results-list // lrv-u-padding-t-150 lrv-u-padding-t-050@mobile-max"
-)
 RESULT_CONTAINER = "o-chart-results-list-row-container"
 RANKING = (
     "c-label a-font-primary-bold-l u-font-size-32@tablet u-letter-spacing-0080@tablet"
@@ -57,20 +54,9 @@ def parse_request(response: requests.Response) -> List[ChartEntry]:
     List[ChartEntry]
         Collection containing each chart entry.
     """
-    if (container := _get_container(response.text)) != []:
-        return _get_data(str(container))
-    return []
-
-
-def _get_container(text: str):
-    soup = BeautifulSoup(text, "html.parser")
-    return soup.find("div", {"class": CHART_RESULT_SELECTOR})
-
-
-def _get_data(text: str) -> List[ChartEntry]:
     data: List = []
 
-    soup = BeautifulSoup(text, "html.parser")
+    soup = BeautifulSoup(response.text, "html.parser")
     for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
         data.append(_parse_block(str(block)))
     return data
