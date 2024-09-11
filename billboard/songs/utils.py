@@ -3,9 +3,9 @@ from typing import List, Optional
 import requests
 from bs4 import BeautifulSoup
 
-from .songs.chart_entry import ChartEntry
+from .chart_entry import ChartEntry
 
-URL: str = "https://www.billboard.com/charts/hot-100/"
+URL: str = "https://www.billboard.com/charts/"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
 RANKING = (
     "c-label a-font-primary-bold-l u-font-size-32@tablet u-letter-spacing-0080@tablet"
@@ -13,12 +13,14 @@ RANKING = (
 DETAILS_CLASS = "lrv-u-width-100p"
 
 
-def make_request(date: str, timeout: Optional[int] = 5) -> requests.Response:
+def make_request(chart: str, date: str, timeout: Optional[int] = 5) -> requests.Response:
     """
     Make the HTTP request of the Billboard Hot 100 site.
 
     Parameters
     -----------
+    chart: str
+        The chart to request (hot 100).
     date: str
         The date of the chart to gather.
     timeout: int
@@ -35,7 +37,7 @@ def make_request(date: str, timeout: Optional[int] = 5) -> requests.Response:
     HTTPError
         On a non-successful status code being returned.
     """
-    response = requests.get(f"{URL}/{date}", timeout=timeout)
+    response = requests.get(f"{URL}/{chart}/{date}", timeout=timeout)
     response.raise_for_status()
     return response
 
