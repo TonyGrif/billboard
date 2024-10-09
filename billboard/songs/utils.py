@@ -2,7 +2,7 @@ from typing import List, Optional
 
 import requests
 from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
+from fake_useragent import UserAgent  # type: ignore
 
 from .chart_entry import ChartEntry
 
