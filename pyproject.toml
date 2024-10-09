@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "billboard"
-version = "0.1.0"
+version = "0.2"
 description = "Python scraper for Billboard Hot 100"
 authors = ["TonyGrif <TonyGriffin2000@gmail.com>"]
 license = "MIT"
@@ -13,6 +13,7 @@ packages = [
 python = "^3.8"
 requests = "^2.32.3"
 beautifulsoup4 = "^4.12.3"
+fake-useragent = "^1.5.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.2.1"

@@ -2,10 +2,11 @@ from typing import List, Optional
 
 import requests
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 
 from .chart_entry import ChartEntry
 
-URL: str = "https://www.billboard.com/charts/"
+URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
 RANKING = (
     "c-label a-font-primary-bold-l u-font-size-32@tablet u-letter-spacing-0080@tablet"
@@ -39,7 +40,10 @@ def make_request(
     HTTPError
         On a non-successful status code being returned.
     """
-    response = requests.get(f"{URL}/{chart}/{date}", timeout=timeout)
+    print(f"{URL}/{chart}")
+    ua = UserAgent()
+    header = {"User-Agent": str(ua.random)}
+    response = requests.get(f"{URL}/{chart}/{date}", headers=header, timeout=timeout)
     response.raise_for_status()
     return response
 
