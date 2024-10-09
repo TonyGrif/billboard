@@ -1,7 +1,7 @@
 import pytest
 from hamcrest import assert_that, contains_string, equal_to, has_length
 
-from billboard.songs.utils import make_request, parse_request
+from billboard.utils import make_request, parse_request
 
 
 @pytest.fixture(scope="module")
