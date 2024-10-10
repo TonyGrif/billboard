@@ -41,7 +41,7 @@ class ArtistChart(Chart):
 
         Returns
         --------
-        ChartEntry
+        ArtistEntry
             A data structure containing the top spot information.
         """
         return self.chart[0]

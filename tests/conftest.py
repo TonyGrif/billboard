@@ -1,6 +1,6 @@
 import pytest
 
-from billboard import SongCharts
+from billboard import ArtistChart, SongCharts
 
 
 @pytest.fixture(scope="session")
@@ -16,3 +16,8 @@ def hot_chart(songs):
 @pytest.fixture
 def glob_chart(songs):
     return songs.global200
+
+
+@pytest.fixture(scope="session")
+def artist_chart():
+    return ArtistChart("2024-08-08")
