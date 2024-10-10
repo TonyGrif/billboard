@@ -1,17 +1,11 @@
 from datetime import datetime, timedelta
 
-import pytest
 from hamcrest import any_of, assert_that, calling, equal_to, has_length, raises
 
 from billboard import ArtistChart
 
 
-@pytest.fixture(scope="class")
-def artist_chart():
-    return ArtistChart("2024-08-08")
-
-
-class TestBillboardChart:
+class TestArtistChart:
     def test_init(self, artist_chart):
         assert_that(artist_chart.date, equal_to("2024-08-08"))
         assert_that(artist_chart.chart, has_length(100))
