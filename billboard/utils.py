@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent  # type: ignore
 
-from .songs.chart_entry import ChartEntry
+from .songs.song_entry import SongEntry
 
 URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
@@ -48,7 +48,7 @@ def make_request(
     return response
 
 
-def parse_request(response: requests.Response) -> List[ChartEntry]:
+def parse_request(response: requests.Response) -> List[SongEntry]:
     """
     Parse the HTTP response for chart data.
 
@@ -70,7 +70,7 @@ def parse_request(response: requests.Response) -> List[ChartEntry]:
     return data
 
 
-def _parse_block(text: str) -> ChartEntry:
+def _parse_block(text: str) -> SongEntry:
     soup = BeautifulSoup(text, "html.parser")
     data: List = []
 
@@ -86,4 +86,4 @@ def _parse_block(text: str) -> ChartEntry:
     else:
         data.extend([None for _ in range(5)])
 
-    return ChartEntry(*data)
+    return SongEntry(*data)

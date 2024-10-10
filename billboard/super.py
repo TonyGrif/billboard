@@ -1,13 +1,13 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
+from datetime import datetime, timedelta
 from typing import List, Optional
 
-from ..super import Chart
-from .song_entry import SongEntry
+from billboard.songs.song_entry import SongEntry
 
 
-class SongChart(Chart):
+class Chart(ABC):
     """
-    Abstract class containing song charts interface.
+    Abstract class containing charts interface.
 
     Attributes
     ----------------
@@ -38,41 +38,46 @@ class SongChart(Chart):
             Set the oldest date allowed for a given chart, defaults to the oldest
             available for the Hot 100 chart.
         """
-        super().__init__(date, auto_date, oldest_date)
+        self.chart: List[SongEntry] = []
+        self.auto_date = auto_date
+        self.oldest_date = oldest_date
+        if date is not None:
+            self.date = date
+        else:
+            self.date = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
 
     @property
-    def top_spot(self) -> SongEntry:
+    def date(self) -> str:
         """
-        Get the top spot from this week.
+        Get the data used for the current chart.
 
         Returns
         --------
-        ChartEntry
-            A data structure containing the top spot information.
+        str
+            The ISO 8601 formatted date.
         """
-        return self.chart[0]
+        return self._date
 
-    def artist_entries(self, artist: str, rank: int = 100) -> List[SongEntry]:
+    @date.setter
+    def date(self, iso_date: str) -> None:
         """
-        Get the entries an artist has on this chart.
+        Set a new date for the class and update the current chart.
 
         Parameters
         -----------
-        artist: str
-            The artists name.
-        rank: int
-            An optional variable for specifying an end value on ranking.
-
-        Returns
-        -------
-        List[ChartEntry]
-            A List containing all entries this artist has.
+        iso_date: str
+            The ISO 8601 string.
         """
-        return [
-            entry
-            for entry in self.chart
-            if entry.artist.lower() == artist.lower() and entry.rank <= rank
-        ]
+        try:
+            date = datetime.fromisoformat(iso_date)
+        except ValueError as exec:
+            raise exec
+
+        if date < datetime.fromisoformat(self.oldest_date) or date > datetime.today():
+            raise ValueError("Invalid date provided")
+
+        self._date = date.strftime("%Y-%m-%d")
+        self._generate_chart()
 
     @abstractmethod
     def _generate_chart(self):
