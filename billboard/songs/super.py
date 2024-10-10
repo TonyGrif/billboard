@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import List, Optional
 
-from ..super import Chart
+from billboard.super import Chart
 from .song_entry import SongEntry
 
 

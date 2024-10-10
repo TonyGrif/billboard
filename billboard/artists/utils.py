@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent  # type: ignore
 
-from .songs.song_entry import SongEntry
+from .artist_entry import ArtistEntry
 
 URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
@@ -48,7 +48,7 @@ def make_request(
     return response
 
 
-def parse_request(response: requests.Response) -> List[SongEntry]:
+def parse_artist_request(response: requests.Response) -> List[ArtistEntry]:
     """
     Parse the HTTP response for chart data.
 
@@ -66,11 +66,11 @@ def parse_request(response: requests.Response) -> List[SongEntry]:
 
     soup = BeautifulSoup(response.text, "html.parser")
     for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
-        data.append(_parse_block(str(block)))
+        data.append(_parse_song_block(str(block)))
     return data
 
 
-def _parse_block(text: str) -> SongEntry:
+def _parse_song_block(text: str) -> ArtistEntry:
     soup = BeautifulSoup(text, "html.parser")
     data: List = []
 
@@ -81,9 +81,9 @@ def _parse_block(text: str) -> SongEntry:
 
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
-        data.extend(details[0:2])
+        data.extend(details[0:1])
         data.extend(details[-3:])
     else:
         data.extend([None for _ in range(5)])
 
-    return SongEntry(*data)
+    return ArtistEntry(*data)
