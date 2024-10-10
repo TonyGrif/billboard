@@ -1,5 +1,4 @@
-from .song_charts import SongCharts
-from .songs import BillboardChart, GlobalChart
+from .songs import BillboardChart, GlobalChart, SongCharts
 
 __all__ = [
     "SongCharts",

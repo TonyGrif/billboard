@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
-class ChartEntry:
+class SongEntry:
     """
     Represents a chart entry for a given song.
 
