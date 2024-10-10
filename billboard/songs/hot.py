@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
-from ..utils import make_request, parse_request
+from .utils import make_request, parse_request
 from .super import SongChart
 
 

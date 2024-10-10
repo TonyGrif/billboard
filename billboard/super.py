@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
 from typing import List, Optional
 
-from billboard.songs.song_entry import SongEntry
-
 
 class Chart(ABC):
     """
@@ -38,7 +36,7 @@ class Chart(ABC):
             Set the oldest date allowed for a given chart, defaults to the oldest
             available for the Hot 100 chart.
         """
-        self.chart: List[SongEntry] = []
+        self.chart: List = []
         self.auto_date = auto_date
         self.oldest_date = oldest_date
         if date is not None:
