@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from billboard.super import Chart
-from .utils import make_request, parse_artist_request
 
 from .artist_entry import ArtistEntry
+from .utils import make_request, parse_artist_request
 
 
 class ArtistChart(Chart):

@@ -2,6 +2,7 @@ from abc import abstractmethod
 from typing import List, Optional
 
 from billboard.super import Chart
+
 from .song_entry import SongEntry
 
 
