@@ -1,3 +1,5 @@
+"""This module contains utility functions for song charts."""
+
 from typing import List, Optional
 
 import requests

@@ -1,3 +1,5 @@
+"""This module contains the scraper for the Hot 100."""
+
 from datetime import datetime, timedelta
 from typing import Optional
 

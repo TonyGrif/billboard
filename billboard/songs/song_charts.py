@@ -1,3 +1,7 @@
+"""This module contains a bundled class containing both the Hot 100
+and Global 200 scrapers.
+"""
+
 from typing import List, Optional
 
 from billboard.songs import BillboardChart, GlobalChart

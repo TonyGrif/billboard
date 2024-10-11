@@ -1,3 +1,5 @@
+"""This module contains the parent class for all song chart classes."""
+
 from abc import abstractmethod
 from typing import List, Optional
 

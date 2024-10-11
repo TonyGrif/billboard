@@ -1,3 +1,5 @@
+"""This module contains the scraper for the Aritst 100 chart."""
+
 from datetime import datetime, timedelta
 from typing import Optional
 
