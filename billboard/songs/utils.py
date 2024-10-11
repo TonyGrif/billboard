@@ -40,7 +40,6 @@ def make_request(
     HTTPError
         On a non-successful status code being returned.
     """
-    print(f"{URL}/{chart}")
     ua = UserAgent()
     header = {"User-Agent": str(ua.random)}
     response = requests.get(f"{URL}/{chart}/{date}", headers=header, timeout=timeout)
