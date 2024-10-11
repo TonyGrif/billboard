@@ -1,3 +1,7 @@
+"""
+This module contains the interface to be used by all other scrapers.
+"""
+
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
 from typing import List, Optional

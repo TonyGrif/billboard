@@ -1,3 +1,5 @@
+"""This module defines the structure of each artist entry."""
+
 from dataclasses import dataclass
 
 

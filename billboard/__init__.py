@@ -1,3 +1,13 @@
+"""This module contains scrapers for the Billboard music charts site.
+
+Classes
+--------
+    SongCharts
+    BillboardChart
+    GlobalChart
+    ArtistChart
+"""
+
 from .artists import ArtistChart
 from .songs import BillboardChart, GlobalChart, SongCharts
 

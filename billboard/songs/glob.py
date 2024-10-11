@@ -1,3 +1,5 @@
+"""This module contains the scraper for the Global 200 chart."""
+
 from datetime import datetime, timedelta
 from typing import Optional
 

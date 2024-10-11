@@ -1,3 +1,5 @@
+"""This module defines utility functions for creating artist charts."""
+
 from typing import List, Optional
 
 import requests
