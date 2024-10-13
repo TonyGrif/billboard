@@ -1,7 +1,7 @@
 """This module contains the parent class for all song chart classes."""
 
 from abc import abstractmethod
-from typing import List, Optional
+from typing import List
 
 from billboard.super import Chart
 
@@ -19,29 +19,6 @@ class SongChart(Chart):
     chart: List[ChartEntry]
         The chart for the given date containing all chart data.
     """
-
-    def __init__(
-        self,
-        date: Optional[str] = None,
-        auto_date: bool = True,
-        oldest_date: str = "1958-08-04",
-    ) -> None:
-        """
-        The constructor for a Chart object.
-
-        Parameters
-        -----------
-        date: str
-            An optional date (YYYY-MM-DD) for this chart; if none is provided,
-            the chart from one day ago is used.
-        auto_date: bool
-            Determines if the object will auto update the date to the previous
-            week if the choosen one does not exist.
-        oldest_date: str
-            Set the oldest date allowed for a given chart, defaults to the oldest
-            available for the Hot 100 chart.
-        """
-        super().__init__(date, auto_date, oldest_date)
 
     @property
     def top_spot(self) -> SongEntry:

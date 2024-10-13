@@ -87,4 +87,11 @@ def _parse_song_block(text: str) -> SongEntry:
     else:
         data.extend([None for _ in range(5)])
 
-    return SongEntry(*data)
+    return SongEntry(
+        rank = data[0],
+        title = data[1],
+        artist = data[2],
+        last_week_rank = data[3],
+        peak_rank = data[4],
+        weeks_on_chart = data[5],
+    )
