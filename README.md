@@ -8,22 +8,17 @@ All dependencies can be resolved through [poetry](https://python-poetry.org/)
 (`poetry install`)
 
 ## Quickstart
+
 ```python
-from billboard import SongCharts
-
-chart = SongCharts("YYYY-MM-DD")
-
-hot100 = chart.hot_chart
-global200 = chart.global_chart
-```
-
-Individual charts can also be imported separately to scrape just the specific chart.
-```python
-from billboard import BillboardChart, GlobalChart
+from billboard import BillboardChart
 
 hot = BillboardChart("YYYY-MM-DD")
-glob = GlobalChart("YYYY-MM-DD")
 ```
 
-## Docs
-Coming soon!
+Other charts can be gathered in a similar way; check the [docs] TBP for more details
+
+## Authors
+* [TonyGrif](https://github.com/TonyGrif) - Creator and Maintainer
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) for details
