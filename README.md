@@ -1,10 +1,8 @@
 # Billboard
-Python scraper for [Billboard Hot 100](https://www.billboard.com/charts/hot-100/)
+Python scraper for [Billboard Charts](https://www.billboard.com/)
 
 ## Requirements
-* [Python 3.8+](https://www.python.org/)
-* [Requests](https://requests.readthedocs.io/en/latest/)
-* [BeautifulSoup4](https://beautiful-soup-4.readthedocs.io/en/latest/)
+* [Python 3.9+](https://www.python.org/)
 
 All dependencies can be resolved through [poetry](https://python-poetry.org/)
 (`poetry install`)
