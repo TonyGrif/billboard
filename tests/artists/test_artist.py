@@ -9,6 +9,7 @@ class TestArtistChart:
     def test_init(self, artist_chart):
         assert_that(artist_chart.date, equal_to("2024-08-08"))
         assert_that(artist_chart.chart, has_length(100))
+        assert_that(artist_chart.oldest_date, equal_to("2014-07-19"))
 
         cur = ArtistChart(auto_date=False)
         yesterday = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
