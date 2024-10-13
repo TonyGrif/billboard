@@ -9,6 +9,7 @@ class TestBillboardChart:
     def test_init(self, hot_chart):
         assert_that(hot_chart.date, equal_to("2024-08-08"))
         assert_that(hot_chart.chart, has_length(100))
+        assert_that(hot_chart.oldest_date, equal_to("1958-08-04"))
 
         cur = BillboardChart(auto_date=False)
         yesterday = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")

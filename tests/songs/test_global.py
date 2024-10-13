@@ -9,6 +9,7 @@ class TestGlobalChart:
     def test_init(self, glob_chart):
         assert_that(glob_chart.date, equal_to("2024-08-08"))
         assert_that(glob_chart.chart, has_length(200))
+        assert_that(glob_chart.oldest_date, equal_to("2020-09-12"))
 
         cur = GlobalChart(auto_date=False)
         yesterday = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")

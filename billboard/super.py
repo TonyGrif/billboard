@@ -72,8 +72,8 @@ class Chart(ABC):
         """
         try:
             date = datetime.fromisoformat(iso_date)
-        except ValueError as exec:
-            raise exec
+        except ValueError as e:
+            raise e
 
         if date < datetime.fromisoformat(self.oldest_date) or date > datetime.today():
             raise ValueError("Invalid date provided")
