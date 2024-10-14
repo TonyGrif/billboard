@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent  # type: ignore
 
-from .song_entry import SongEntry
+from .dataclasses.song_entry import SongEntry
 
 URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"

@@ -3,8 +3,9 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
+from billboard.utils import make_request, parse_request
+
 from .super import SongChart
-from .utils import make_request, parse_request
 
 
 class BillboardChart(SongChart):
