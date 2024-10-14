@@ -4,8 +4,7 @@ from abc import abstractmethod
 from typing import List
 
 from billboard.super import Chart
-
-from .song_entry import SongEntry
+from billboard.utils import SongEntry
 
 
 class SongChart(Chart):
