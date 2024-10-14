@@ -75,10 +75,7 @@ def _parse_song_block(text: str) -> SongEntry:
     soup = BeautifulSoup(text, "html.parser")
     data: List = []
 
-    if (rank_html := soup.find("span", {"class": RANKING})) is not None:
-        data.append(int(rank_html.get_text(strip=True)))
-    else:
-        data.append(None)
+    data.append(_get_ranking(soup))
 
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
@@ -123,10 +120,7 @@ def _parse_artist_block(text: str) -> ArtistEntry:
     soup = BeautifulSoup(text, "html.parser")
     data: List = []
 
-    if (rank_html := soup.find("span", {"class": RANKING})) is not None:
-        data.append(int(rank_html.get_text(strip=True)))
-    else:
-        data.append(None)
+    data.append(_get_ranking(soup))
 
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
@@ -142,3 +136,8 @@ def _parse_artist_block(text: str) -> ArtistEntry:
         peak_rank=data[3],
         weeks_on_chart=data[4],
     )
+
+def _get_ranking(soup: BeautifulSoup) -> int | None:
+    if (rank_html := soup.find("span", {"class": RANKING})) is not None:
+        return int(rank_html.get_text(strip=True))
+    return None
