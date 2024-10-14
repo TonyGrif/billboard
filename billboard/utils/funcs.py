@@ -1,6 +1,6 @@
 """This module contains utility functions for song charts."""
 
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import requests
 from bs4 import BeautifulSoup
@@ -127,14 +127,14 @@ def _parse_artist_block(text: str) -> ArtistEntry:
     )
 
 
-def _get_ranking(soup: BeautifulSoup) -> int | None:
+def _get_ranking(soup: BeautifulSoup) -> Union[int, None]:
     if (rank_html := soup.find("span", {"class": RANKING})) is not None:
         return int(rank_html.get_text(strip=True))
     return None
 
 
-def _get_dets(soup: BeautifulSoup, entry: str) -> List[str | None]:
-    data: List[str | None] = []
+def _get_dets(soup: BeautifulSoup, entry: str) -> List[Union[str, None]]:
+    data: List[Union[str, None]] = []
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
 
