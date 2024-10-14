@@ -49,7 +49,7 @@ def make_request(
     return response
 
 
-def parse_request(response: requests.Response) -> List[SongEntry]:
+def parse_song_request(response: requests.Response) -> List[SongEntry]:
     """
     Parse the HTTP response for chart data.
 
