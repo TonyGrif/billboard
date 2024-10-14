@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent  # type: ignore
 
-from .dataclasses.song_entry import SongEntry
+from .dataclasses import ArtistEntry, SongEntry
 
 URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
@@ -94,4 +94,51 @@ def _parse_song_block(text: str) -> SongEntry:
         last_week_rank=data[3],
         peak_rank=data[4],
         weeks_on_chart=data[5],
+    )
+
+
+def parse_artist_request(response: requests.Response) -> List[ArtistEntry]:
+    """
+    Parse the HTTP response for chart data.
+
+    Parameters
+    ----------
+    response: requests.Response
+        The HTTP response generated from the Billboard Hot 100 site.
+
+    Returns
+    ---------
+    List[ChartEntry]
+        Collection containing each chart entry.
+    """
+    data: List = []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
+        data.append(_parse_artist_block(str(block)))
+    return data
+
+
+def _parse_artist_block(text: str) -> ArtistEntry:
+    soup = BeautifulSoup(text, "html.parser")
+    data: List = []
+
+    if (rank_html := soup.find("span", {"class": RANKING})) is not None:
+        data.append(int(rank_html.get_text(strip=True)))
+    else:
+        data.append(None)
+
+    if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
+        details = details_str.get_text(separator="\\", strip=True).split("\\")
+        data.extend(details[0:1])
+        data.extend(details[-3:])
+    else:
+        data.extend([None for _ in range(5)])
+
+    return ArtistEntry(
+        rank=data[0],
+        artist=data[1],
+        last_week_rank=data[2],
+        peak_rank=data[3],
+        weeks_on_chart=data[4],
     )
