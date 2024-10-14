@@ -77,12 +77,7 @@ def _parse_song_block(text: str) -> SongEntry:
 
     data.append(_get_ranking(soup))
 
-    if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
-        details = details_str.get_text(separator="\\", strip=True).split("\\")
-        data.extend(details[0:2])
-        data.extend(details[-3:])
-    else:
-        data.extend([None for _ in range(5)])
+    data.extend(_get_dets(soup, "song"))
 
     return SongEntry(
         rank=data[0],
@@ -121,13 +116,7 @@ def _parse_artist_block(text: str) -> ArtistEntry:
     data: List = []
 
     data.append(_get_ranking(soup))
-
-    if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
-        details = details_str.get_text(separator="\\", strip=True).split("\\")
-        data.extend(details[0:1])
-        data.extend(details[-3:])
-    else:
-        data.extend([None for _ in range(5)])
+    data.extend(_get_dets(soup, "artist"))
 
     return ArtistEntry(
         rank=data[0],
@@ -137,7 +126,24 @@ def _parse_artist_block(text: str) -> ArtistEntry:
         weeks_on_chart=data[4],
     )
 
+
 def _get_ranking(soup: BeautifulSoup) -> int | None:
     if (rank_html := soup.find("span", {"class": RANKING})) is not None:
         return int(rank_html.get_text(strip=True))
     return None
+
+
+def _get_dets(soup: BeautifulSoup, entry: str) -> List[str | None]:
+    data: List[str | None] = []
+    if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
+        details = details_str.get_text(separator="\\", strip=True).split("\\")
+
+        if entry == "artist":
+            data.extend(details[0:1])
+            data.extend(details[-3:])
+        elif entry == "song":
+            data.extend(details[0:2])
+            data.extend(details[-3:])
+    else:
+        data.extend([None for _ in range(5)])
+    return data
