@@ -1,9 +1,9 @@
+name: Upload Release
+
 on:
   push:
     tags:
     - 'v*'
-
-name: Upload Release
 
 jobs:
   build:
