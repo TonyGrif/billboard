@@ -1,6 +1,4 @@
-"""
-This module contains the interface to be used by all other scrapers.
-"""
+"""This module contains the interface to be used by all other scrapers."""
 
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -8,15 +6,14 @@ from typing import List, Optional
 
 
 class Chart(ABC):
-    """
-    Abstract class containing charts interface.
+    """Abstract class containing charts interface.
 
-    Attributes
-    ----------------
-    date: str
-        The date for this chart in ISO 8601 format (YYYY-MM-DD).
-    chart: List[ChartEntry]
-        The chart for the given date containing all chart data.
+    Attributes:
+        date: The date for this chart in ISO 8601 format (YYYY-MM-DD).
+        chart: Structure containing all chart data.
+        auto_date: Determines if the object will auto update the date to the
+            previous week if the chosen one does not exist.
+        oldest_date: The oldest date allowed for a given chart.
     """
 
     def __init__(
@@ -25,20 +22,13 @@ class Chart(ABC):
         auto_date: bool = True,
         oldest_date: str = "1958-08-04",
     ) -> None:
-        """
-        The constructor for a Chart object.
+        """The constructor for a Chart object.
 
-        Parameters
-        -----------
-        date: str
-            An optional date (YYYY-MM-DD) for this chart; if none is provided,
-            the chart from one day ago is used.
-        auto_date: bool
-            Determines if the object will auto update the date to the previous
-            week if the choosen one does not exist.
-        oldest_date: str
-            Set the oldest date allowed for a given chart, defaults to the oldest
-            available for the Hot 100 chart.
+        Args:
+            date: An optional date (YYYY-MM-DD); if none is provided, yesterday is used.
+            auto_date: Determines if the object will auto update the date to the
+                previous week if the choosen one does not exist.
+            oldest_date: Set the oldest date allowed for a given chart.
         """
         self.chart: List = []
         self.auto_date = auto_date
@@ -50,25 +40,22 @@ class Chart(ABC):
 
     @property
     def date(self) -> str:
-        """
-        Get the data used for the current chart.
+        """Get the data used for the current chart.
 
-        Returns
-        --------
-        str
+        Returns:
             The ISO 8601 formatted date.
         """
         return self._date
 
     @date.setter
     def date(self, iso_date: str) -> None:
-        """
-        Set a new date for the class and update the current chart.
+        """Set a new date for the class and update the current chart.
 
-        Parameters
-        -----------
-        iso_date: str
-            The ISO 8601 string.
+        Args:
+            iso_date: The ISO 8601 string.
+
+        Raises:
+            ValueError: If the date is not in YYYY-MM-DD format.
         """
         try:
             date = datetime.fromisoformat(iso_date)
@@ -83,7 +70,5 @@ class Chart(ABC):
 
     @abstractmethod
     def _generate_chart(self):
-        """
-        Generate the chart for the given week.
-        """
+        """Generate the chart for the given week."""
         raise NotImplementedError  # pragma: no cover
