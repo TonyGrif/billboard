@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent  # type: ignore
 
-from .dataclasses import ArtistEntry, SongEntry
+from .dataclasses import AlbumEntry, ArtistEntry, SongEntry
 
 URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
@@ -124,6 +124,46 @@ def _parse_artist_block(text: str) -> ArtistEntry:
         last_week_rank=data[2],
         peak_rank=data[3],
         weeks_on_chart=data[4],
+    )
+
+
+def parse_album_request(response: requests.Response) -> List[AlbumEntry]:
+    """
+    Parse the HTTP response for chart data.
+
+    Parameters
+    ----------
+    response: requests.Response
+        The HTTP response generated from the Billboard Hot 100 site.
+
+    Returns
+    ---------
+    List[AlbumEntry]
+        Collection containing each chart entry.
+    """
+    data: List = []
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
+        data.append(_parse_album_block(str(block)))
+    return data
+
+
+def _parse_album_block(text: str) -> AlbumEntry:
+    soup = BeautifulSoup(text, "html.parser")
+    data: List = []
+
+    data.append(_get_ranking(soup))
+
+    data.extend(_get_dets(soup, "song"))
+
+    return AlbumEntry(
+        rank=data[0],
+        title=data[1],
+        artist=data[2],
+        last_week_rank=data[3],
+        peak_rank=data[4],
+        weeks_on_chart=data[5],
     )
 
 

@@ -6,8 +6,10 @@ Classes
     BillboardChart
     GlobalChart
     ArtistChart
+    AlbumChart
 """
 
+from .album import AlbumChart
 from .artists import ArtistChart
 from .songs import BillboardChart, GlobalChart, SongCharts
 
@@ -16,4 +18,5 @@ __all__ = [
     "BillboardChart",
     "GlobalChart",
     "ArtistChart",
+    "AlbumChart",
 ]
