@@ -14,7 +14,7 @@ class TestAlbumChart:
         cur = AlbumChart(auto_date=False)
         yesterday = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
         assert_that(cur.date, equal_to(yesterday))
-        assert_that(len(cur.chart), any_of(equal_to(0), equal_to(100)))
+        assert_that(len(cur.chart), any_of(equal_to(0), equal_to(200)))
 
     def test_date_exception(self):
         assert_that(calling(AlbumChart).with_args("01/01/24"), raises(ValueError))
