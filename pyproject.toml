@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "billboard"
-version = "0.3.0"
+version = "0.3.2"
 description = "Python scraper for Billboard Hot 100"
 authors = ["TonyGrif <TonyGriffin2000@gmail.com>"]
 license = "MIT"
