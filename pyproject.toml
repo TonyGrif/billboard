@@ -48,7 +48,7 @@ format = "ruff format"
 type = "mypy"
 check = "ruff check"
 lint.sequence = ["format", "check", "type"]
-docs = "pdoc -t pdoc/ -o docs/ billboard/"
+docs = "pdoc -t pdoc/ -o docs/ --docformat google billboard/"
 
 [tool.tox]
 legacy_tox_ini = """
