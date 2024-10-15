@@ -1,13 +1,9 @@
-"""
-This module contains dataclasses for use by Scrapers.
-"""
+"""This module contains dataclasses for use by Scrapers."""
 
-from .entry import Entry as ArtistEntry
-from .titled_entry import TitledEntry as AlbumEntry  # pylint: disable=W0404
-from .titled_entry import TitledEntry as SongEntry  # pylint: disable=W0404
+from .entry import Entry
+from .titled_entry import TitledEntry
 
 __all__ = [
-    "ArtistEntry",
-    "SongEntry",
-    "AlbumEntry",
+    "Entry",
+    "TitledEntry",
 ]

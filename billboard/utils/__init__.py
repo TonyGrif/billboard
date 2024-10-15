@@ -1,34 +1,16 @@
-"""
-This module contains the functions and dataclasses for scrapers.
+"""This module contains the functions and dataclasses for scrapers."""
 
-Classes
---------
-    SongEntry
-    AlbumEntry
-    ArtistEntry
-
-Functions
----------
-    make_request
-    parse_song_request
-    parse_artist_request
-    parse_album_request
-"""
-
-from .dataclasses import AlbumEntry, ArtistEntry, SongEntry
+from .dataclasses import Entry, TitledEntry
 from .funcs import (
     make_request,
-    parse_album_request,
-    parse_artist_request,
-    parse_song_request,
+    parse_request,
+    parse_titled_request,
 )
 
 __all__ = [
-    "SongEntry",
-    "ArtistEntry",
-    "AlbumEntry",
+    "Entry",
+    "TitledEntry",
     "make_request",
-    "parse_album_request",
-    "parse_artist_request",
-    "parse_song_request",
+    "parse_request",
+    "parse_titled_request",
 ]

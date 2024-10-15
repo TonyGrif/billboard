@@ -4,7 +4,8 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from billboard.super import Chart
-from billboard.utils import AlbumEntry, make_request, parse_album_request
+from billboard.utils import TitledEntry as AlbumEntry
+from billboard.utils import make_request, parse_titled_request
 
 
 class AlbumChart(Chart):
@@ -51,7 +52,7 @@ class AlbumChart(Chart):
         Generate the chart for the given week.
         """
         response = make_request("billboard-200", self.date)
-        if (data := parse_album_request(response)) == [] and self.auto_date is True:
+        if (data := parse_titled_request(response)) == [] and self.auto_date is True:
             week_ago = datetime.fromisoformat(self.date) - timedelta(weeks=1)
             self.date = week_ago.strftime("%Y-%m-%d")
         else:
