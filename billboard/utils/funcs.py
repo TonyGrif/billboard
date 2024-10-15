@@ -1,4 +1,11 @@
-"""This module contains utility functions for song charts."""
+"""This module contains utility functions for song charts.
+
+Attributes:
+    URL: The root URL used for all charts to append to.
+    RESULT_CONTAINER: The section containing a chart entry details.
+    RANKING: The containiner containing the rank of the entry.
+    DETAILS_CLASS: The container containing all details of the entry.
+"""
 
 from typing import List, Optional, Union
 
@@ -6,7 +13,7 @@ import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent  # type: ignore
 
-from .dataclasses import AlbumEntry, ArtistEntry, SongEntry
+from .dataclasses import Entry, TitledEntry
 
 URL: str = "https://www.billboard.com/charts"
 RESULT_CONTAINER = "o-chart-results-list-row-container"
@@ -19,28 +26,18 @@ DETAILS_CLASS = "lrv-u-width-100p"
 def make_request(
     chart: str, date: str, timeout: Optional[int] = 5
 ) -> requests.Response:
-    """
-    Make the HTTP request of the Billboard Hot 100 site.
+    """Make the HTTP request of the Billboard site for a specific chart.
 
-    Parameters
-    -----------
-    chart: str
-        The chart to request (hot-100 or billboard-global-200).
-    date: str
-        The date of the chart to gather.
-    timeout: int
-        An optional integer to specify the timeout for making the request; the
-        default value is 5 seconds.
+    Args:
+        chart:The chart to request (hot-100 or billboard-global-200).
+        date: The date of the chart to gather.
+        timeout: An optional integer to specify the timeout for making the request.
 
-    Returns
-    ---------
-    requests.Response
+    Returns:
         The response object from the HTTP GET request.
 
-    Raises
-    ----------
-    HTTPError
-        On a non-successful status code being returned.
+    Raises:
+        HTTPError: On a non-successful status code being returned.
     """
     ua = UserAgent()
     header = {"User-Agent": str(ua.random)}
@@ -49,37 +46,31 @@ def make_request(
     return response
 
 
-def parse_song_request(response: requests.Response) -> List[SongEntry]:
-    """
-    Parse the HTTP response for chart data.
+def parse_titled_request(response: requests.Response) -> List[TitledEntry]:
+    """Parse the HTTP response for chart data with a title.
 
-    Parameters
-    ----------
-    response: requests.Response
-        The HTTP response generated from the Billboard Hot 100 site.
+    Args:
+        response: The HTTP response returned from a Billboard chart.
 
-    Returns
-    ---------
-    List[ChartEntry]
+    Returns:
         Collection containing each chart entry.
     """
     data: List = []
 
     soup = BeautifulSoup(response.text, "html.parser")
     for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
-        data.append(_parse_song_block(str(block)))
+        data.append(_parse_titled_block(str(block)))
     return data
 
 
-def _parse_song_block(text: str) -> SongEntry:
+def _parse_titled_block(text: str) -> TitledEntry:
     soup = BeautifulSoup(text, "html.parser")
     data: List = []
 
     data.append(_get_ranking(soup))
+    data.extend(_get_dets(soup, "title"))
 
-    data.extend(_get_dets(soup, "song"))
-
-    return SongEntry(
+    return TitledEntry(
         rank=data[0],
         title=data[1],
         artist=data[2],
@@ -89,81 +80,36 @@ def _parse_song_block(text: str) -> SongEntry:
     )
 
 
-def parse_artist_request(response: requests.Response) -> List[ArtistEntry]:
-    """
-    Parse the HTTP response for chart data.
+def parse_request(response: requests.Response) -> List[Entry]:
+    """Parse the HTTP response for chart data without a title.
 
-    Parameters
-    ----------
-    response: requests.Response
-        The HTTP response generated from the Billboard Hot 100 site.
+    Args:
+        response: The HTTP response generated from the Billboard Hot 100 site.
 
-    Returns
-    ---------
-    List[ChartEntry]
+    Returns:
         Collection containing each chart entry.
     """
     data: List = []
 
     soup = BeautifulSoup(response.text, "html.parser")
     for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
-        data.append(_parse_artist_block(str(block)))
+        data.append(_parse_block(str(block)))
     return data
 
 
-def _parse_artist_block(text: str) -> ArtistEntry:
+def _parse_block(text: str) -> Entry:
     soup = BeautifulSoup(text, "html.parser")
     data: List = []
 
     data.append(_get_ranking(soup))
-    data.extend(_get_dets(soup, "artist"))
+    data.extend(_get_dets(soup, "entry"))
 
-    return ArtistEntry(
+    return Entry(
         rank=data[0],
         artist=data[1],
         last_week_rank=data[2],
         peak_rank=data[3],
         weeks_on_chart=data[4],
-    )
-
-
-def parse_album_request(response: requests.Response) -> List[AlbumEntry]:
-    """
-    Parse the HTTP response for chart data.
-
-    Parameters
-    ----------
-    response: requests.Response
-        The HTTP response generated from the Billboard Hot 100 site.
-
-    Returns
-    ---------
-    List[AlbumEntry]
-        Collection containing each chart entry.
-    """
-    data: List = []
-
-    soup = BeautifulSoup(response.text, "html.parser")
-    for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
-        data.append(_parse_album_block(str(block)))
-    return data
-
-
-def _parse_album_block(text: str) -> AlbumEntry:
-    soup = BeautifulSoup(text, "html.parser")
-    data: List = []
-
-    data.append(_get_ranking(soup))
-
-    data.extend(_get_dets(soup, "song"))
-
-    return AlbumEntry(
-        rank=data[0],
-        title=data[1],
-        artist=data[2],
-        last_week_rank=data[3],
-        peak_rank=data[4],
-        weeks_on_chart=data[5],
     )
 
 
@@ -178,10 +124,10 @@ def _get_dets(soup: BeautifulSoup, entry: str) -> List[Union[str, None]]:
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
 
-        if entry == "artist":
+        if entry == "title":
             data.extend(details[0:1])
             data.extend(details[-3:])
-        elif entry == "song":
+        elif entry == "entry":
             data.extend(details[0:2])
             data.extend(details[-3:])
     else:
