@@ -1,9 +1,9 @@
-"""
-This module contains scrapers for the album-based charts on Billboard.
+"""This module contains scrapers for the album-based charts on Billboard.
 
-Classes
---------
-    AlbumChart
+Usage Example:
+.. code-block:: python
+    album_charts = AlbumChart(YYYY-MM-DD)
+    print(album_charts.chart)
 """
 
 from .album import AlbumChart
