@@ -2,12 +2,12 @@
 This module contains dataclasses for use by Scrapers.
 """
 
-from .album_entry import AlbumEntry
-from .artist_entry import ArtistEntry
-from .song_entry import SongEntry
+from .entry import Entry as ArtistEntry
+from .titled_entry import TitledEntry as AlbumEntry  # pylint: disable=W0404
+from .titled_entry import TitledEntry as SongEntry  # pylint: disable=W0404
 
 __all__ = [
-    "AlbumEntry",
-    "SongEntry",
     "ArtistEntry",
+    "SongEntry",
+    "AlbumEntry",
 ]

@@ -3,9 +3,9 @@ This module contains the functions and dataclasses for scrapers.
 
 Classes
 --------
+    SongEntry
     AlbumEntry
     ArtistEntry
-    SongEntry
 
 Functions
 ---------
@@ -24,9 +24,9 @@ from .funcs import (
 )
 
 __all__ = [
-    "AlbumEntry",
-    "ArtistEntry",
     "SongEntry",
+    "ArtistEntry",
+    "AlbumEntry",
     "make_request",
     "parse_album_request",
     "parse_artist_request",
