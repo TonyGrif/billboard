@@ -8,43 +8,33 @@ from billboard.utils import TitledEntry as SongEntry
 
 
 class SongChart(Chart):
-    """
-    Abstract class containing song charts interface.
+    """Abstract class containing song charts interface.
 
-    Attributes
-    ----------------
-    date: str
-        The date for this chart in ISO 8601 format (YYYY-MM-DD).
-    chart: List[ChartEntry]
-        The chart for the given date containing all chart data.
+    Attributes:
+        date: The date for this chart in ISO 8601 format (YYYY-MM-DD).
+        chart: The chart for the given date containing all chart data.
+        auto_date: Determines if the object will auto update the date to the
+            previous week if the chosen one does not exist.
+        oldest_date: The oldest date allowed for a given chart.
     """
 
     @property
     def top_spot(self) -> SongEntry:
-        """
-        Get the top spot from this week.
+        """Get the top spot from this week.
 
-        Returns
-        --------
-        ChartEntry
+        Returns:
             A data structure containing the top spot information.
         """
         return self.chart[0]
 
     def artist_entries(self, artist: str, rank: int = 100) -> List[SongEntry]:
-        """
-        Get the entries an artist has on this chart.
+        """Get the entries an artist has on this chart.
 
-        Parameters
-        -----------
-        artist: str
-            The artists name.
-        rank: int
-            An optional variable for specifying an end value on ranking.
+        Args:
+            artist: The artists name.
+        rank: An optional variable for specifying an end value on ranking.
 
-        Returns
-        -------
-        List[ChartEntry]
+        Returns:
             A List containing all entries this artist has.
         """
         return [
@@ -55,7 +45,5 @@ class SongChart(Chart):
 
     @abstractmethod
     def _generate_chart(self):
-        """
-        Generate the chart for the given week.
-        """
+        """Generate the chart for the given week."""
         raise NotImplementedError  # pragma: no cover
