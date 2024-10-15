@@ -124,10 +124,10 @@ def _get_dets(soup: BeautifulSoup, entry: str) -> List[Union[str, None]]:
     if (details_str := soup.find("li", {"class": DETAILS_CLASS})) is not None:
         details = details_str.get_text(separator="\\", strip=True).split("\\")
 
-        if entry == "title":
+        if entry == "entry":
             data.extend(details[0:1])
             data.extend(details[-3:])
-        elif entry == "entry":
+        elif entry == "title":
             data.extend(details[0:2])
             data.extend(details[-3:])
     else:
