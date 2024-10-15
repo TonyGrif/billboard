@@ -1,9 +1,9 @@
-"""
-This module contains the scraper for the artist-based chart on Billboard's site.
+"""This module contains scrapers for the artist-based charts on Billboard.
 
-Classes
---------
-    ArtistChart
+Usage Example:
+.. code-block:: python
+    artist_charts = ArtistChart(YYYY-MM-DD)
+    print(artist_charts.chart)
 """
 
 from .artist import ArtistChart
