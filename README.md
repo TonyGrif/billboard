@@ -1,21 +1,21 @@
 # Billboard
 Python scraper for [Billboard Charts](https://www.billboard.com/)
 
-## Requirements
-* [Python 3.9+](https://www.python.org/)
+## Installation
+Billboard is available through [PyPi](https://pypi.org/) through
+`pip install billboard`.
 
-All dependencies can be resolved through [poetry](https://python-poetry.org/)
-(`poetry install`)
+Billboard officially supports [Python 3.9+](https://www.python.org/).
 
-## Quickstart
-
+## Quick Start
 ```python
 from billboard import BillboardChart
 
 hot = BillboardChart("YYYY-MM-DD")
 ```
 
-Other charts can be gathered in a similar way; check the [docs] TBP for more details
+Other charts can be gathered in a similar way; check the 
+[API docs](https://tonygrif.github.io/billboard/billboard.html) for more details.
 
 ## Authors
 * [TonyGrif](https://github.com/TonyGrif) - Creator and Maintainer
