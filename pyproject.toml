@@ -20,7 +20,7 @@ test = "pytest --cov --cov-report term-missing"
 format = "ruff format"
 type = "mypy billboard/"
 check = "ruff check"
-lint.sequence = ["format", "check", "type"]
+lint.sequence = ["check", "type"]
 docs = "pdoc -t pdoc/ -o docs/ --docformat google billboard/"
 
 [build-system]
