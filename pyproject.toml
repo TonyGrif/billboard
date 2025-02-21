@@ -40,10 +40,16 @@ select = ["E", "F", "I"]
 
 [tool.poe.tasks]
 test = "pytest --cov --cov-report term-missing"
-format = "ruff format"
-type = "mypy billboard/"
-check = "ruff check"
-lint.sequence = ["check", "type"]
+
+_imports = "ruff check --select I --fix ."
+_format = "ruff format ."
+format.sequence = ["_imports", "_format"]
+
+_type = "mypy billboard/"
+_check = "ruff check ."
+_lint = "pylint billboard/"
+lint.sequence = ["_type", "_check", "_lint"]
+
 docs = "pdoc -t pdoc/ -o docs/ --docformat google billboard/"
 
 [build-system]
