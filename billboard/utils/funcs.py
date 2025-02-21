@@ -7,6 +7,7 @@ Attributes:
     DETAILS_CLASS: The container containing all details of the entry.
 """
 
+import multiprocessing
 from typing import List, Optional, Union
 
 import requests
@@ -55,12 +56,15 @@ def parse_titled_request(response: requests.Response) -> List[TitledEntry]:
     Returns:
         Collection containing each chart entry.
     """
-    data: List = []
-
     soup = BeautifulSoup(response.text, "html.parser")
-    for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
-        data.append(_parse_titled_block(str(block)))
-    return data
+
+    with multiprocessing.Pool(processes=100) as pool:
+        results = [
+            pool.apply_async(_parse_titled_block, (str(block),))
+            for block in soup.find_all("div", {"class": RESULT_CONTAINER})
+        ]
+        results = [r.get() for r in results]
+    return results
 
 
 def _parse_titled_block(text: str) -> TitledEntry:
@@ -89,12 +93,15 @@ def parse_request(response: requests.Response) -> List[Entry]:
     Returns:
         Collection containing each chart entry.
     """
-    data: List = []
-
     soup = BeautifulSoup(response.text, "html.parser")
-    for block in soup.find_all("div", {"class": RESULT_CONTAINER}):
-        data.append(_parse_block(str(block)))
-    return data
+
+    with multiprocessing.Pool(processes=100) as pool:
+        results = [
+            pool.apply_async(_parse_block, (str(block),))
+            for block in soup.find_all("div", {"class": RESULT_CONTAINER})
+        ]
+        results = [r.get() for r in results]
+    return results
 
 
 def _parse_block(text: str) -> Entry:
