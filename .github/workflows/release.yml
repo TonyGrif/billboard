@@ -11,19 +11,14 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Python Poetry Action
-        uses: abatilo/actions-poetry@v3.0.0
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        python-version: "3.12"
       - name: Build
         run: |
-          poetry install
-          poetry build
-      - name: Release
-        uses: softprops/action-gh-release@v2
+          uv sync
+          uv build
+      - uses: softprops/action-gh-release@v2
         with:
           files: dist/*
           draft: true
