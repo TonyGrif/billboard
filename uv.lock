@@ -44,16 +44,22 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "mypy" },
-    { name = "pdoc" },
     { name = "poethepoet" },
-    { name = "pyhamcrest" },
+]
+docs = [
+    { name = "pdoc" },
+]
+lint = [
+    { name = "mypy" },
     { name = "pylint" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
     { name = "ruff" },
     { name = "types-beautifulsoup4" },
     { name = "types-requests" },
+]
+test = [
+    { name = "pyhamcrest" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
 ]
 
 [package.metadata]
@@ -64,17 +70,19 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [
+dev = [{ name = "poethepoet", specifier = ">=0.32.2" }]
+docs = [{ name = "pdoc", specifier = ">=15.0.1" }]
+lint = [
     { name = "mypy", specifier = ">=1.15.0" },
-    { name = "pdoc", specifier = ">=15.0.1" },
-    { name = "poethepoet", specifier = ">=0.32.2" },
-    { name = "pyhamcrest", specifier = ">=2.1.0" },
     { name = "pylint", specifier = ">=3.3.4" },
-    { name = "pytest", specifier = ">=8.3.4" },
-    { name = "pytest-cov", specifier = ">=6.0.0" },
     { name = "ruff", specifier = ">=0.9.7" },
     { name = "types-beautifulsoup4", specifier = ">=4.12.0.20250204" },
     { name = "types-requests", specifier = ">=2.32.0.20241016" },
+]
+test = [
+    { name = "pyhamcrest", specifier = ">=2.1.0" },
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest-cov", specifier = ">=6.0.0" },
 ]
 
 [[package]]
