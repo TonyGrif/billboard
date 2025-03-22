@@ -31,11 +31,7 @@ class GlobalChart(SongChart):
             auto_date: Determines if the object will auto update the date to the
                 previous week if the choosen one does not exist.
         """
-        super().__init__(date, auto_date, "2020-09-12")
-        self.auto_gen = auto_gen
-
-        if self.auto_gen:
-            self.generate_chart()
+        super().__init__(date, auto_gen, auto_date, "2020-09-12")
 
     def generate_chart(self):
         """Generate the chart for the given week."""
