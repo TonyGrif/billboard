@@ -5,7 +5,9 @@ from billboard import AlbumChart, ArtistChart, SongCharts
 
 @pytest.fixture(scope="session")
 def songs():
-    return SongCharts("2024-08-08")
+    songs = SongCharts("2024-08-08")
+    songs.generate_charts()
+    return songs
 
 
 @pytest.fixture
@@ -20,9 +22,13 @@ def glob_chart(songs):
 
 @pytest.fixture(scope="session")
 def artist_chart():
-    return ArtistChart("2024-08-08")
+    artist = ArtistChart("2024-08-08")
+    artist.generate_chart()
+    return artist
 
 
 @pytest.fixture(scope="session")
 def album_chart():
-    return AlbumChart("2024-08-08")
+    album = AlbumChart("2024-08-08")
+    album.generate_chart()
+    return album

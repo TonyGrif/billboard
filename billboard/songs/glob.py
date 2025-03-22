@@ -29,7 +29,7 @@ class GlobalChart(SongChart):
         """
         super().__init__(date, auto_date, "2020-09-12")
 
-    def _generate_chart(self):
+    def generate_chart(self):
         """Generate the chart for the given week."""
         response = make_request("billboard-global-200", self.date)
         if (data := parse_titled_request(response)) == [] and self.auto_date is True:

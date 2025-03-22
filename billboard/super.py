@@ -66,9 +66,13 @@ class Chart(ABC):
             raise ValueError("Invalid date provided")
 
         self._date = date.strftime("%Y-%m-%d")
-        self._generate_chart()
 
     @abstractmethod
-    def _generate_chart(self):
+    def generate_chart(self):
+        """Generate the chart for the given week."""
+        raise NotImplementedError  # pragma: no cover
+
+    # @abstractmethod
+    def async_generate_chart(self):
         """Generate the chart for the given week."""
         raise NotImplementedError  # pragma: no cover

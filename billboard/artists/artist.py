@@ -39,7 +39,7 @@ class ArtistChart(Chart):
         """
         return self.chart[0]
 
-    def _generate_chart(self):
+    def generate_chart(self):
         """Generate the chart for the given week."""
         response = make_request("artist-100", self.date)
         if (data := parse_request(response)) == [] and self.auto_date is True:

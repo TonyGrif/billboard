@@ -38,7 +38,7 @@ class AlbumChart(Chart):
         """
         return self.chart[0]
 
-    def _generate_chart(self):
+    def generate_chart(self):
         """Generate the chart for the given week."""
         response = make_request("billboard-200", self.date)
         if (data := parse_titled_request(response)) == [] and self.auto_date is True:
