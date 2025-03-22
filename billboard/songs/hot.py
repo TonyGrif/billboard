@@ -35,5 +35,6 @@ class BillboardChart(SongChart):
         if (data := parse_titled_request(response)) == [] and self.auto_date is True:
             week_ago = datetime.fromisoformat(self.date) - timedelta(weeks=1)
             self.date = week_ago.strftime("%Y-%m-%d")
+            self.generate_chart()
         else:
             self.chart = data
