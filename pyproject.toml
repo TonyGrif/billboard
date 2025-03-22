@@ -1,6 +1,6 @@
 [project]
 name = "billboard"
-version = "0.4.0"
+version = "0.4.1"
 description = "Python scraper for Billboard Hot 100"
 authors = [{name = "TonyGrif", email = "TonyGriffin2000@gmail.com"}]
 license = "MIT"
