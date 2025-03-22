@@ -19,15 +19,22 @@ class AlbumChart(Chart):
         oldest_date: The oldest date allowed for a given chart.
     """
 
-    def __init__(self, date: Optional[str] = None, auto_date: bool = True) -> None:
+    def __init__(
+        self, date: Optional[str] = None, auto_gen: bool = True, auto_date: bool = True
+    ) -> None:
         """The constructor for a AlbumChart object.
 
         Args:
             date: An optional date (YYYY-MM-DD); if none is provided, yesterday is used.
+            auto_gen: Determine if the object should automatically generate the chart.
             auto_date: Determines if the object will auto update the date to the
                 previous week if the choosen one does not exist.
         """
         super().__init__(date, auto_date, "1963-08-17")
+        self.auto_gen = auto_gen
+
+        if self.auto_gen:
+            self.generate_chart()
 
     @property
     def top_spot(self) -> AlbumEntry:

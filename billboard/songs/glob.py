@@ -14,20 +14,28 @@ class GlobalChart(SongChart):
     Attributes:
         date: The date for this chart in ISO 8601 format (YYYY-MM-DD).
         chart: The chart for the given date containing all chart data.
+        auto_gen: Determines if the object will auto generate charts.
         auto_date: Determines if the object will auto update the date to the
             previous week if the chosen one does not exist.
         oldest_date: The oldest date allowed for a given chart.
     """
 
-    def __init__(self, date: Optional[str] = None, auto_date: bool = True) -> None:
+    def __init__(
+        self, date: Optional[str] = None, auto_gen: bool = True, auto_date: bool = True
+    ) -> None:
         """The constructor for a GlobalChart object.
 
         Args:
             date: An optional date (YYYY-MM-DD); if none is provided, yesterday is used.
+            auto_gen: Determines if the object will auto generate chart.
             auto_date: Determines if the object will auto update the date to the
                 previous week if the choosen one does not exist.
         """
         super().__init__(date, auto_date, "2020-09-12")
+        self.auto_gen = auto_gen
+
+        if self.auto_gen:
+            self.generate_chart()
 
     def generate_chart(self):
         """Generate the chart for the given week."""
