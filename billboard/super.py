@@ -19,6 +19,7 @@ class Chart(ABC):
     def __init__(
         self,
         date: Optional[str] = None,
+        auto_gen: bool = True,
         auto_date: bool = True,
         oldest_date: str = "1958-08-04",
     ) -> None:
@@ -31,12 +32,16 @@ class Chart(ABC):
             oldest_date: Set the oldest date allowed for a given chart.
         """
         self.chart: List = []
+        self.auto_gen = auto_gen
         self.auto_date = auto_date
         self.oldest_date = oldest_date
         if date is not None:
             self.date = date
         else:
             self.date = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
+
+        if self.auto_gen:
+            self.generate_chart()
 
     @property
     def date(self) -> str:

@@ -25,12 +25,14 @@ class SongCharts:
         Args:
             date: An optional date (YYYY-MM-DD); if none is provided, yesterday is used.
         """
-        self.hot100 = BillboardChart(date)
-        self.global200 = GlobalChart(date)
         self.auto_gen = auto_gen
 
         if self.auto_gen:
-            self.generate_charts()
+            self.hot100 = BillboardChart(date)
+            self.global200 = GlobalChart(date)
+        else:
+            self.hot100 = BillboardChart(date, auto_gen=False)
+            self.global200 = GlobalChart(date, auto_gen=False)
 
     @property
     def hot_chart(self) -> List[SongEntry]:

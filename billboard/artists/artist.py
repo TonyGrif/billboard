@@ -32,11 +32,7 @@ class ArtistChart(Chart):
             auto_date: Determines if the object will auto update the date to the
                 previous week if the choosen one does not exist.
         """
-        super().__init__(date, auto_date, "2014-07-19")
-        self.auto_gen = auto_gen
-
-        if self.auto_gen:
-            self.generate_chart()
+        super().__init__(date, auto_gen, auto_date, "2014-07-19")
 
     @property
     def top_spot(self) -> ArtistEntry:
