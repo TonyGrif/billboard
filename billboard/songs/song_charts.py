@@ -25,6 +25,7 @@ class SongCharts:
         """
         self.hot100 = BillboardChart(date)
         self.global200 = GlobalChart(date)
+        self.generate_charts()
 
     @property
     def hot_chart(self) -> List[SongEntry]:
@@ -43,3 +44,7 @@ class SongCharts:
             A list containing SongEntry elements.
         """
         return self.global200.chart
+
+    def generate_charts(self):
+        self.hot100.generate_chart()
+        self.global200.generate_chart()

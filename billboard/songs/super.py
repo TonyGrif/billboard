@@ -44,6 +44,6 @@ class SongChart(Chart):
         ]
 
     @abstractmethod
-    def _generate_chart(self):
+    def generate_chart(self):
         """Generate the chart for the given week."""
         raise NotImplementedError  # pragma: no cover
