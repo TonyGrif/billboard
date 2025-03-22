@@ -14,7 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-        python-version: "3.12"
+        with:
+          python-version: "3.12"
       - run: uv sync --group docs
       - run: uv run poe docs
 
