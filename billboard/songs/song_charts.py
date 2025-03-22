@@ -4,8 +4,9 @@ and Global 200 scrapers.
 
 from typing import List, Optional
 
-from billboard.songs import BillboardChart, GlobalChart
 from billboard.utils import TitledEntry as SongEntry
+
+from ..songs import BillboardChart, GlobalChart
 
 
 class SongCharts:
